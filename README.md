@@ -113,11 +113,11 @@ alembic revision --autogenerate -m "create users and tasks"
 
 ![POST /tasks](img/post-tasks-201.png)
 
-Список задач с фильтром — 200:
+Получение задачи — 200:
 
-![GET /tasks](img/get-tasks-200.png)
+![GET /tasks/{id}](img/get-task-200.png)
 
-Частичное обновление задачи — 200:
+Частичное обновление задачи — 200 (в заголовках ответа виден `x-process-time`):
 
 ![PATCH /tasks/{id}](img/patch-task-200.png)
 
