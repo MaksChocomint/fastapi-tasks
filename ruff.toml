@@ -1,0 +1,7 @@
+line-length = 100
+# Файлы миграций генерирует Alembic
+extend-exclude = ["migrations/versions"]
+
+[lint]
+# B008: Depends(...) в значении по умолчанию — штатный способ внедрения зависимостей в FastAPI
+ignore = ["B008"]
