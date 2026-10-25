@@ -15,8 +15,8 @@ pytest, Docker, GitHub Actions.
 
 - GitHub Container Registry: <https://github.com/MaksChocomint/fastapi-tasks/pkgs/container/fastapi-tasks>
   (`docker pull ghcr.io/makschocomint/fastapi-tasks:latest`)
-- Docker Hub: <https://hub.docker.com/r/DOCKERHUB_USER/fastapi-tasks>
-  (`docker pull DOCKERHUB_USER/fastapi-tasks:latest`)
+- Docker Hub: <https://hub.docker.com/r/maksimchocomint/fastapi-tasks>
+  (`docker pull maksimchocomint/fastapi-tasks:latest`)
 
 ## Структура
 
