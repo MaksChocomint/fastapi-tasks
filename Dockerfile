@@ -9,6 +9,9 @@ RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 # --- Этап 2: финальный образ ---
 FROM python:3.13-slim AS runtime
 
+# Привязывает опубликованный образ в GHCR к репозиторию
+LABEL org.opencontainers.image.source=https://github.com/MaksChocomint/fastapi-tasks
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
