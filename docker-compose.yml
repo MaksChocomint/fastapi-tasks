@@ -8,6 +8,37 @@ services:
     # Порт на хосте можно сменить через DB_PORT, если 5432 уже занят
     ports: ["${DB_PORT:-5432}:5432"]
     volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d tasks"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      DATABASE_URL: postgresql+asyncpg://app:app@db:5432/tasks
+    # Сначала миграции, затем запуск сервиса
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports: ["8000:8000"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Тесты: docker compose --profile test run --rm tests
+  tests:
+    build:
+      context: .
+      target: test
+    environment:
+      DATABASE_URL: postgresql+asyncpg://app:app@db:5432/tasks_test
+      TEST_DATABASE_URL: postgresql+asyncpg://app:app@db:5432/tasks_test
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: [test]
 
 volumes:
   pgdata:
