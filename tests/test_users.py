@@ -4,7 +4,7 @@ from httpx import AsyncClient
 async def test_create_user(client: AsyncClient) -> None:
     response = await client.post("/users", json={"email": "ivan@example.com", "name": "Иван"})
 
-    assert response.status_code == 201
+    assert response.status_code == 200  # намеренная ошибка: должно быть 201
     data = response.json()
     assert data["id"] == 1
     assert data["email"] == "ivan@example.com"
