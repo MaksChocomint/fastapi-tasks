@@ -305,15 +305,23 @@ push / pull_request
 
 ### Проверка: pull request с упавшим тестом
 
-В ветке `broken-test` в тест намеренно внесена ошибка, по ней открыт pull request.
-Pipeline стал красным, а job `build` не запускался:
-
-![Упавший pipeline](img/ci-failed.png)
-
-После исправления теста pipeline стал зелёным, pull request влит в `main`, и job `build`
-опубликовал образ:
+Успешный pipeline при push в `main`: все три job зелёные, `build` опубликовал образ
+в GHCR и Docker Hub.
 
 ![Успешный pipeline](img/ci-success.png)
+
+Для проверки создана ветка `broken-test`: в `test_create_user` ожидаемый код намеренно
+заменён на 200 вместо 201. По ней открыт
+[pull request #1](https://github.com/MaksChocomint/fastapi-tasks/pull/1).
+Pipeline стал красным: `lint` прошёл, `test` упал с `assert 201 == 200`, а `build`
+пропущен, потому что зависит от `test` (`needs`):
+
+![Упавший pipeline в pull request](img/ci-failed-pr.png)
+
+![Упавший pipeline в Actions](img/ci-failed.png)
+
+После этого тест исправлен в той же ветке, pipeline стал зелёным, и pull request
+влит в `main`.
 
 ### Контрольные вопросы ПЗ3
 
